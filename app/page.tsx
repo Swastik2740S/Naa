@@ -3,8 +3,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 
 export default function Home() {
-  const [step, setStep] = useState(0);
-  const [name, setName] = useState("");
+  const name = "Tritiya";
   const [accepted, setAccepted] = useState(false);
   const [yesScale, setYesScale] = useState(1);
   const [noPos, setNoPos] = useState({ top: "70%", left: "55%" });
@@ -41,61 +40,38 @@ export default function Home() {
         </motion.div>
       ))}
 
-      {/* Glass Card Container */}
+      {/* Glass Card */}
       <motion.div
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         className="w-full max-w-md bg-white/40 backdrop-blur-lg rounded-3xl shadow-2xl p-6 md:p-10 text-center z-10"
       >
-        {/* STEP 0 — Intro */}
-        {step === 0 && (
+        {!accepted ? (
           <>
-            <h1 className="text-3xl md:text-4xl font-bold text-red-600 mb-4">
-              Hey there 💌
-            </h1>
-            <p className="text-gray-700 mb-6">
-              Before we continue… what’s your name?
-            </p>
-
-            <input
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Enter your name"
-              className="w-full p-3 rounded-xl border border-gray-300 mb-6 text-center focus:outline-none focus:ring-2 focus:ring-pink-400"
-            />
-
-            <button
-              onClick={() => name && setStep(1)}
-              className="w-full py-3 bg-pink-500 text-white rounded-xl text-lg font-semibold shadow-lg active:scale-95"
-            >
-              Continue 💖
-            </button>
-          </>
-        )}
-
-        {/* STEP 1 — Question */}
-        {step === 1 && !accepted && (
-          <>
-            <motion.h2
+            <motion.h1
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
-              className="text-3xl md:text-4xl font-bold text-red-600 mb-8"
+              className="text-3xl md:text-4xl font-bold text-red-600 mb-6"
             >
-              {name}, will you be my Valentine? 💘
-            </motion.h2>
+              Tritiya 💌
+            </motion.h1>
+
+            <p className="text-lg md:text-xl text-gray-700 mb-8">
+              Will you be my Valentine? 💘
+            </p>
 
             <div className="flex justify-center gap-4 relative min-h-[120px]">
-              {/* YES */}
+              {/* YES BUTTON */}
               <motion.button
                 animate={{ scale: yesScale }}
                 transition={{ type: "spring", stiffness: 200 }}
                 onClick={() => setAccepted(true)}
-                className="px-8 py-3 bg-green-500 text-white text-xl rounded-full shadow-lg"
+                className="px-8 py-3 bg-green-500 text-white text-xl rounded-full shadow-lg active:scale-95"
               >
                 Yes 💖
               </motion.button>
 
-              {/* NO */}
+              {/* NO BUTTON */}
               <button
                 onMouseEnter={moveNo}
                 onClick={moveNo}
@@ -110,22 +86,36 @@ export default function Home() {
               </button>
             </div>
           </>
-        )}
-
-        {/* STEP 2 — Celebration */}
-        {accepted && (
+        ) : (
           <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }}>
             <h1 className="text-4xl md:text-5xl font-bold text-red-600 mb-4">
               Yaaay!!! ❤️
             </h1>
 
             <p className="text-lg text-gray-700 mb-4">
-              {name}, you just made my heart so happy!
+              You just made my heart so happy!
             </p>
 
-            <div className="text-2xl font-bold text-pink-600">
-              Swastik ❤️ {name}
+            <div className="text-2xl md:text-3xl font-bold text-pink-600">
+              Swastik ❤️ Tritiya
             </div>
+
+            {/* Heart Burst */}
+            {[...Array(20)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute text-2xl"
+                initial={{ x: "50vw", y: "50vh", opacity: 1 }}
+                animate={{
+                  x: Math.random() * 100 + "vw",
+                  y: Math.random() * 100 + "vh",
+                  opacity: 0,
+                }}
+                transition={{ duration: 2 }}
+              >
+                ❤️
+              </motion.div>
+            ))}
           </motion.div>
         )}
       </motion.div>
